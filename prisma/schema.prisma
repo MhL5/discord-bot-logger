@@ -13,16 +13,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 2 models providence and cities
-model providence {
+model Province {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   name   String
-  cities city[]
+  cities City[]
 }
 
-model city {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  providence   providence @relation(fields: [providenceId], references: [id])
-  providenceId String     @db.ObjectId
+model City {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  province   Province @relation(fields: [provinceId], references: [id])
+  provinceId String   @db.ObjectId
 }
