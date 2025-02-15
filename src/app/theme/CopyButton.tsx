@@ -30,7 +30,7 @@ export default function CopyButton() {
       {mounted && (
         <Button
           onClick={handleClick}
-          className="fixed top-4 right-4 z-50"
+          className="fixed bottom-4 right-4 z-50"
           size="lg"
           disabled={isCopied}
         >
