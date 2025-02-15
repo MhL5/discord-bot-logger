@@ -28,7 +28,7 @@ export default function Page() {
     <main className="min-h-dvh p-4 bg-background">
       <CopyButton />
 
-      <Card>
+      <Card className="bg-background">
         <CardHeader>
           <CardTitle className="text-xl font-bold mb-5">
             Shadcn Theme Helper
@@ -49,8 +49,8 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           {mounted && (
-            <div className="grid starting:opacity-0 transition-all duration-300 p-4 grid-cols-[400px,1fr] w-fit mr-auto gap-5">
-              <div className="flex flex-col gap-8">
+            <div className="flex flex-col  starting:opacity-0 transition-all duration-300 p-4  w-fit mr-auto gap-5">
+              <div className="flex flex-wrap gap-8">
                 {cssVars.map((cssVarName, i) => {
                   return (
                     <ColorInput
