@@ -87,3 +87,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  #theme-page {
+    @apply transition-all duration-1000;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+}
