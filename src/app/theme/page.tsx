@@ -25,7 +25,7 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-dvh p-4 bg-background">
+    <main className="min-h-dvh p-4 bg-background" id="theme-page">
       <CopyButton />
 
       <Card className="bg-background">
