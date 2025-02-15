@@ -1,7 +1,12 @@
 "use client";
 
-import { cssColorVars } from "@/app/theme/constants";
-import { getInitialColor, hexToHSL, hslToHex } from "@/app/theme/utils";
+import {
+  cssVars,
+  getInitialColor,
+  hexToHSL,
+  hslToHex,
+} from "@/app/theme/utils";
+import { CardsDemo } from "@/components/cards";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -12,10 +17,10 @@ export default function Page() {
 
   return (
     <main className="min-h-dvh p-4 bg-background">
-      <div className="grid p-4 grid-cols-1 w-fit mr-auto gap-5">
-        {mounted && (
-          <>
-            {cssColorVars.map((cssVarName, i) => {
+      {mounted && (
+        <div className="grid starting:opacity-0 transition-all duration-300 p-4 grid-cols-[400px,1fr] w-fit mr-auto gap-5">
+          <div className="flex flex-col gap-8">
+            {cssVars.map((cssVarName, i) => {
               return (
                 <ColorInput
                   cssVarName={cssVarName}
@@ -23,9 +28,10 @@ export default function Page() {
                 />
               );
             })}
-          </>
-        )}
-      </div>
+          </div>
+          <CardsDemo />
+        </div>
+      )}
     </main>
   );
 }
@@ -40,12 +46,28 @@ function ColorInput({ cssVarName }: { cssVarName: string }) {
 
   useEffect(() => {
     setHslColor(hexToHSL(color));
+    const tailwindVarFormat = hslColor
+      .replaceAll("hsl(", "")
+      .replaceAll(")", "")
+      .replaceAll(",", "");
 
-    document.documentElement.style.setProperty(`--${cssVarName}`, color);
-  }, [color, cssVarName]);
+    document.documentElement.style.setProperty(
+      `--${cssVarName}`,
+      tailwindVarFormat
+    );
+  }, [hslColor, color, cssVarName]);
 
   return (
-    <div className="flex flex-col items-start justify-start gap-1 border-2 border-black px-5 rounded-lg py-3">
+    <div className="flex flex-col items-start justify-start gap-1 border-2 h-fit border-black px-5 rounded-lg py-3">
+      <input
+        type="text"
+        id="color-input-1234"
+        value={color}
+        onChange={(e) => {
+          setColor(e.target.value);
+        }}
+        className="w-full h-10 border"
+      />
       <input
         type="color"
         id="color-input-1234"

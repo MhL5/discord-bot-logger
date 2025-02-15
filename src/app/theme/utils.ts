@@ -88,3 +88,25 @@ export function getInitialColor({ cssVarName }: { cssVarName: string }) {
   const computedStyle = getComputedStyle(document.documentElement);
   return computedStyle.getPropertyValue(`--${cssVarName}`).trim();
 }
+
+export const cssVars = [
+  "background",
+  "foreground",
+  "card",
+  "card-foreground",
+  "popover",
+  "popover-foreground",
+  "primary",
+  "primary-foreground",
+  "secondary",
+  "secondary-foreground",
+  "muted",
+  "muted-foreground",
+  "accent",
+  "accent-foreground",
+  "destructive",
+  "destructive-foreground",
+  "border",
+  "input",
+  "ring",
+];
