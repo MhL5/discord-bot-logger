@@ -84,6 +84,19 @@ export function hslToHex(hsl: string): string {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
+export function getColors() {
+  const computedStyle = getComputedStyle(document.documentElement);
+
+  return cssVars
+    .map(
+      (cssVarName) =>
+        `--${cssVarName}: ${computedStyle
+          .getPropertyValue(`--${cssVarName}`)
+          .trim()}`
+    )
+    .join(`;\n`);
+}
+
 export function getInitialColor({ cssVarName }: { cssVarName: string }) {
   const computedStyle = getComputedStyle(document.documentElement);
   return computedStyle.getPropertyValue(`--${cssVarName}`).trim();

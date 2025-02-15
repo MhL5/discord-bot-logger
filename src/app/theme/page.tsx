@@ -1,5 +1,6 @@
 "use client";
 
+import CopyButton from "@/app/theme/CopyButton";
 import {
   cssVars,
   cssVarsInfo,
@@ -25,6 +26,8 @@ export default function Page() {
 
   return (
     <main className="min-h-dvh p-4 bg-background">
+      <CopyButton />
+
       <Card>
         <CardHeader>
           <CardTitle className="text-xl font-bold mb-5">
@@ -91,7 +94,6 @@ function ColorInput({ cssVarName }: { cssVarName: string }) {
     <div className="flex flex-col items-start justify-start gap-1 border-2 h-fit border-black px-5 rounded-lg py-3">
       <input
         type="text"
-        id="color-input-1234"
         value={color}
         onChange={(e) => {
           setColor(e.target.value);
@@ -100,7 +102,6 @@ function ColorInput({ cssVarName }: { cssVarName: string }) {
       />
       <input
         type="color"
-        id="color-input-1234"
         value={color}
         onChange={(e) => {
           setColor(e.target.value);
