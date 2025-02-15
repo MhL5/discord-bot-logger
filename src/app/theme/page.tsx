@@ -2,11 +2,19 @@
 
 import {
   cssVars,
+  cssVarsInfo,
   getInitialColor,
   hexToHSL,
   hslToHex,
 } from "@/app/theme/utils";
 import { CardsDemo } from "@/components/cards";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -17,21 +25,43 @@ export default function Page() {
 
   return (
     <main className="min-h-dvh p-4 bg-background">
-      {mounted && (
-        <div className="grid starting:opacity-0 transition-all duration-300 p-4 grid-cols-[400px,1fr] w-fit mr-auto gap-5">
-          <div className="flex flex-col gap-8">
-            {cssVars.map((cssVarName, i) => {
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-bold mb-5">
+            Shadcn Theme Helper
+          </CardTitle>
+          <ul className="grid gap-3">
+            {cssVarsInfo.map(({ description, label }, i) => {
               return (
-                <ColorInput
-                  cssVarName={cssVarName}
-                  key={`Page-${cssVarName}-${i}`}
-                />
+                <li
+                  className="flex items-center justify-start gap-3"
+                  key={`${description}-${i}-${i}`}
+                >
+                  <CardTitle>{label}:</CardTitle>
+                  <CardDescription>{description} </CardDescription>
+                </li>
               );
             })}
-          </div>
-          <CardsDemo />
-        </div>
-      )}
+          </ul>
+        </CardHeader>
+        <CardContent>
+          {mounted && (
+            <div className="grid starting:opacity-0 transition-all duration-300 p-4 grid-cols-[400px,1fr] w-fit mr-auto gap-5">
+              <div className="flex flex-col gap-8">
+                {cssVars.map((cssVarName, i) => {
+                  return (
+                    <ColorInput
+                      cssVarName={cssVarName}
+                      key={`Page-${cssVarName}-${i}`}
+                    />
+                  );
+                })}
+              </div>
+              <CardsDemo />
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </main>
   );
 }

@@ -92,21 +92,53 @@ export function getInitialColor({ cssVarName }: { cssVarName: string }) {
 export const cssVars = [
   "background",
   "foreground",
-  "card",
-  "card-foreground",
-  "popover",
-  "popover-foreground",
   "primary",
   "primary-foreground",
   "secondary",
   "secondary-foreground",
-  "muted",
   "muted-foreground",
-  "accent",
-  "accent-foreground",
   "destructive",
-  "destructive-foreground",
   "border",
-  "input",
-  "ring",
+];
+
+export const cssVarsInfo = [
+  {
+    label: "Background",
+    description: "Defines the background color of the application.",
+  },
+  {
+    label: "Foreground",
+    description: "Sets the foreground (text) color for general content.",
+  },
+  {
+    label: "Primary",
+    description:
+      "The main brand color used for primary actions and highlights.",
+  },
+  {
+    label: "Primary Foreground",
+    description:
+      "Text color that contrasts well against the primary background.",
+  },
+  {
+    label: "Secondary",
+    description: "A secondary color used for less prominent elements.",
+  },
+  {
+    label: "Secondary Foreground",
+    description:
+      "Text color that contrasts well against the secondary background.",
+  },
+  {
+    label: "Muted Foreground",
+    description: "Used for subdued text, such as placeholder text or hints.",
+  },
+  {
+    label: "Destructive",
+    description: "Color used for destructive actions, like delete buttons.",
+  },
+  {
+    label: "Border",
+    description: "Defines the default border color for elements.",
+  },
 ];
