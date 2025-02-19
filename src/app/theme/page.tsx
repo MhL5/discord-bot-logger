@@ -26,7 +26,7 @@ export default function Page() {
 
   return (
     <main className="min-h-dvh p-4 bg-background" id="theme-page">
-      <CopyButton />
+      <CopyButton className="fixed bottom-4 right-4 z-50" />
 
       <Card className="bg-background">
         <CardHeader>
@@ -49,8 +49,8 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           {mounted && (
-            <div className="flex flex-col  starting:opacity-0 transition-all duration-300 p-4  w-fit mr-auto gap-5">
-              <div className="flex flex-wrap gap-8">
+            <div>
+              <div className="flex flex-col  starting:opacity-0 transition-all duration-300 p-4 bg-gray-500 text-gray-100  w-fit mr-auto gap-5 rounded-sm mb-8">
                 {cssVars.map((cssVarName, i) => {
                   return (
                     <ColorInput
@@ -59,6 +59,7 @@ export default function Page() {
                     />
                   );
                 })}
+                <CopyButton />
               </div>
               <CardsDemo />
             </div>
@@ -91,63 +92,34 @@ function ColorInput({ cssVarName }: { cssVarName: string }) {
   }, [hslColor, color, cssVarName]);
 
   return (
-    <div className="flex flex-col items-start justify-start gap-1 border-2 h-fit border-black px-5 rounded-lg py-3">
-      <input
-        type="text"
-        value={color}
-        onChange={(e) => {
-          setColor(e.target.value);
-        }}
-        className="w-full h-10 border"
-      />
-      <input
-        type="color"
-        value={color}
-        onChange={(e) => {
-          setColor(e.target.value);
-        }}
-        className="w-full h-10 border"
-      />
-
-      <div
-        className="font-bold text-base"
-        // eslint-disable-next-line react/jsx-no-comment-textnodes
-      >
-        /*{" "}
-        <span
+    <>
+      <div className="flex items-center justify-start gap-2">
+        {cssVarName}:{" "}
+        <label
+          htmlFor={`${cssVarName}--`}
+          className="p-4 rounded-[5px] shrink-0"
           style={{
-            backgroundColor: `${color}`,
+            background: `${color}`,
           }}
-        >
-          {color}
-        </span>{" "}
-        */
-      </div>
-      <div className="flex items-center justify-start gap-2 w-full">
-        <div className="py-2 rounded-md font-bold text-base">{cssVarName}:</div>
-        <div
-          className="px-1.5 py-1 rounded-md"
-          style={{
-            backgroundColor: `${hslColor}`,
+        />
+        <input
+          type="color"
+          value={color}
+          id={`${cssVarName}--`}
+          onChange={(e) => {
+            setColor(e.target.value);
           }}
-        >
-          {hslColor}
-        </div>
-      </div>
-
-      <div className="flex items-center justify-start gap-2 w-full">
-        <div className="py-2 rounded-md font-bold text-base">
-          --{cssVarName}:
-        </div>
-        <div
-          className="px-1.5 py-1 rounded-md"
-          style={{
-            backgroundColor: `${hslColor}`,
+          className="hidden"
+        />
+        <input
+          type="text"
+          value={color}
+          onChange={(e) => {
+            setColor(e.target.value);
           }}
-        >
-          {hslColor.replaceAll(",", " ")}
-        </div>
+          className="bg-gray-900 w-fit py-1 rounded-[5px] text-sm px-2"
+        />
       </div>
-    </div>
+    </>
   );
 }
