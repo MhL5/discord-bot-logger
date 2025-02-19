@@ -1,10 +1,11 @@
 import { getColors } from "@/app/theme/utils";
 import { Button } from "@/components/ui/button";
 import { CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Check, Copy } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function CopyButton() {
+export default function CopyButton({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -30,7 +31,7 @@ export default function CopyButton() {
       {mounted && (
         <Button
           onClick={handleClick}
-          className="fixed bottom-4 right-4 z-50"
+          className={cn("", className)}
           size="lg"
           disabled={isCopied}
         >
