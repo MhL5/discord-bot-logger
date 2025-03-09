@@ -25,3 +25,18 @@ model City {
   province   Province @relation(fields: [provinceId], references: [id])
   provinceId String   @db.ObjectId
 }
+
+// task management system:
+enum TaskStatus {
+  todo
+  inProgress
+  done
+}
+
+model ProjectsTasks {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  status      TaskStatus
+  projectName String
+}
