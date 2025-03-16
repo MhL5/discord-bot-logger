@@ -39,4 +39,6 @@ model ProjectsTasks {
   description String
   status      TaskStatus
   projectName String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
