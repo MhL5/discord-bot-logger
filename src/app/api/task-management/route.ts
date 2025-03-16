@@ -8,25 +8,25 @@ const isValidProject = (projectName: string) => {
 };
 
 export async function POST(req: Request) {
-  const projectName = new URL(req.url).searchParams.get("projectName");
-
-  if (!projectName || !isValidProject(projectName)) {
-    return NextResponse.json(
-      { error: "Invalid project name" },
-      { status: 400 }
-    );
-  }
-
-  const { title, description, status } = await req.json();
-
-  if (!title || !description || !status) {
-    return NextResponse.json(
-      { error: "Missing required fields" },
-      { status: 400 }
-    );
-  }
-
   try {
+    const projectName = new URL(req.url).searchParams.get("projectName");
+
+    if (!projectName || !isValidProject(projectName)) {
+      return NextResponse.json(
+        { error: "Invalid project name" },
+        { status: 400 }
+      );
+    }
+
+    const { title, description, status } = await req.json();
+
+    if (!title || !description || !status) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
     const newTask = await prismaClient.projectsTasks.create({
       data: {
         title,
