@@ -1,39 +1,37 @@
 import prismaClient from "@/lib/prismaClient";
 import { serverEnv } from "@/utils/env/serverEnv";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 // Helper function to check if the projectName is valid
 const isValidProject = (projectName: string) => {
   return serverEnv.PROJECT_TASKS_PROJECT_NAMES.split(",").includes(projectName);
 };
 
+export const taskSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().default(""),
+  status: z.enum(["todo", "inProgress", "done"]),
+  projectName: z.string().min(1, "Project name is required"),
+  category: z.enum(["frontend", "backend", "both"]),
+  priority: z.enum(["low", "medium", "high"]),
+  tags: z.array(z.string()).optional(),
+});
+
 export async function POST(req: Request) {
   try {
     const projectName = new URL(req.url).searchParams.get("projectName");
-
     if (!projectName || !isValidProject(projectName)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }
       );
     }
-
-    const { title, description, status } = await req.json();
-
-    if (!title || !description || !status) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const body = await req.json();
+    const validatedData = taskSchema.parse({ ...body, projectName });
 
     const newTask = await prismaClient.projectsTasks.create({
-      data: {
-        title,
-        description,
-        status,
-        projectName: projectName,
-      },
+      data: validatedData,
     });
 
     return NextResponse.json(newTask, { status: 201 });
@@ -72,41 +70,22 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
   try {
     const projectName = new URL(req.url).searchParams.get("projectName");
-
     if (!projectName || !isValidProject(projectName)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }
       );
     }
-
-    const { id, title, description, status } = await req.json();
-
-    if (!id || !(title || description || status)) {
-      return NextResponse.json(
-        {
-          error:
-            "ID is required, and at least one of title, description, or status must be provided.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Create an object with only the provided values
-    const updateData: Record<string, string> = {};
-    if (!!title) updateData.title = title;
-    if (!!description) updateData.description = description;
-    if (!!status) updateData.status = status;
+    const body = await req.json();
+    const validatedData = taskSchema.parse({ ...body, projectName });
 
     const updatedTask = await prismaClient.projectsTasks.update({
-      where: { id },
-      data: updateData,
+      where: { id: body.id },
+      data: validatedData,
     });
 
-    console.log("\x1b[35m" + `test` + "\x1b[0m");
     return NextResponse.json(updatedTask);
-  } catch (error) {
-    console.dir(error, { depth: Infinity });
+  } catch {
     return NextResponse.json({ error: "Error updating task" }, { status: 500 });
   }
 }
