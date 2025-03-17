@@ -33,12 +33,29 @@ enum TaskStatus {
   done
 }
 
+// task management system:
+enum TaskPriorities {
+  low
+  medium
+  high
+}
+
+// task management system:
+enum TaskCategory {
+  frontend
+  backend
+  both
+}
+
 model ProjectsTasks {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  description String
-  status      TaskStatus
+  description String         @default("")
+  status      TaskStatus     @default(todo)
   projectName String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  category    TaskCategory   @default(both)
+  tags        String[]       @default([])
+  priority    TaskPriorities @default(low)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
