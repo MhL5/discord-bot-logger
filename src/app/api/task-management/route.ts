@@ -8,7 +8,7 @@ const isValidProject = (projectName: string) => {
   return serverEnv.PROJECT_TASKS_PROJECT_NAMES.split(",").includes(projectName);
 };
 
-export const taskSchema = z.object({
+const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().default(""),
   status: z.enum(["todo", "inProgress", "done"]),
