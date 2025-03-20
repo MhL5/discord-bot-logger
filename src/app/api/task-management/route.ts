@@ -16,7 +16,6 @@ const taskSchema = z.object({
   category: z.enum(["frontend", "backend", "both"]),
   priority: z.enum(["low", "medium", "high"]),
   tags: z.array(z.string()).optional(),
-  order: z.string().min(1),
 });
 
 export async function POST(req: Request) {

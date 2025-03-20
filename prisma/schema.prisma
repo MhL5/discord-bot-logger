@@ -56,7 +56,6 @@ model ProjectsTasks {
   category    TaskCategory   @default(both)
   tags        String[]       @default([])
   priority    TaskPriorities @default(low)
-  order       String         @default("")
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 }
