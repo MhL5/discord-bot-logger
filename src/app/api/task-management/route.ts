@@ -40,6 +40,8 @@ export async function POST(req: Request) {
   }
 }
 
+// Define a custom priority order
+const priorityOrder = ["high", "medium", "low"];
 // Get Tasks by projectName
 export async function GET(req: Request) {
   try {
@@ -57,7 +59,21 @@ export async function GET(req: Request) {
       orderBy: { updatedAt: "desc" },
     });
 
-    return NextResponse.json(tasks);
+    // Sort the tasks based on priority and then by updatedAt
+    const sortedTasks = tasks.toSorted((a, b) => {
+      const priorityA = priorityOrder.indexOf(a.priority);
+      const priorityB = priorityOrder.indexOf(b.priority);
+
+      // First, sort by priority
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
+      }
+
+      // If priorities are the same, sort by updatedAt
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+    });
+
+    return NextResponse.json(sortedTasks);
   } catch {
     return NextResponse.json(
       { error: "Error fetching tasks" },
