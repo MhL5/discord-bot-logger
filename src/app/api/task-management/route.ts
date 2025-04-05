@@ -22,10 +22,7 @@ export async function POST(req: Request) {
   try {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
-      return NextResponse.json(
-        { error: "Invalid tasksUniqueId" },
-        { status: 400 }
-      );
+      return NextResponse.json("Something went wrong!", { status: 400 });
     }
     const body = await req.json();
     const validatedData = taskSchema.parse({ ...body, tasksUniqueId });
@@ -45,10 +42,7 @@ export async function GET(req: Request) {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
 
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
-      return NextResponse.json(
-        { error: "Invalid tasksUniqueId" },
-        { status: 400 }
-      );
+      return NextResponse.json("Something went wrong!", { status: 400 });
     }
 
     const tasks = await prismaClient.projectsTasks.findMany({
@@ -69,10 +63,7 @@ export async function PUT(req: Request) {
   try {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
-      return NextResponse.json(
-        { error: "Invalid tasksUniqueId" },
-        { status: 400 }
-      );
+      return NextResponse.json("Something went wrong!", { status: 400 });
     }
     const body = await req.json();
     const validatedData = taskSchema.parse({ ...body, tasksUniqueId });
@@ -94,10 +85,7 @@ export async function DELETE(req: Request) {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
 
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
-      return NextResponse.json(
-        { error: "Invalid tasksUniqueId" },
-        { status: 400 }
-      );
+      return NextResponse.json("Something went wrong!", { status: 400 });
     }
 
     const { id } = await req.json();
