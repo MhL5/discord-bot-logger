@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
-        { error: "Invalid project name" },
+        { error: "Invalid tasksUniqueId" },
         { status: 400 }
       );
     }
@@ -46,7 +46,7 @@ export async function GET(req: Request) {
 
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
-        { error: "Invalid project name" },
+        { error: "Invalid tasksUniqueId" },
         { status: 400 }
       );
     }
@@ -70,7 +70,7 @@ export async function PUT(req: Request) {
     const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
-        { error: "Invalid project name" },
+        { error: "Invalid tasksUniqueId" },
         { status: 400 }
       );
     }
@@ -95,7 +95,7 @@ export async function DELETE(req: Request) {
 
     if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
-        { error: "Invalid project name" },
+        { error: "Invalid tasksUniqueId" },
         { status: 400 }
       );
     }
