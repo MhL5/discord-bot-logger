@@ -12,23 +12,23 @@ const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().default(""),
   status: z.enum(["todo", "inProgress", "done"]),
-  projectName: z.string().min(1, "Project name is required"),
-  category: z.enum(["frontend", "backend", "both"]),
+  tasksUniqueId: z.string().min(1, "Project name is required"),
+  category: z.string().min(1),
   priority: z.enum(["low", "medium", "high"]),
   tags: z.array(z.string()).optional(),
 });
 
 export async function POST(req: Request) {
   try {
-    const projectName = new URL(req.url).searchParams.get("projectName");
-    if (!projectName || !isValidProject(projectName)) {
+    const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
+    if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }
       );
     }
     const body = await req.json();
-    const validatedData = taskSchema.parse({ ...body, projectName });
+    const validatedData = taskSchema.parse({ ...body, tasksUniqueId });
 
     const newTask = await prismaClient.projectsTasks.create({
       data: validatedData,
@@ -42,9 +42,9 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const projectName = new URL(req.url).searchParams.get("projectName");
+    const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
 
-    if (!projectName || !isValidProject(projectName)) {
+    if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }
@@ -52,7 +52,7 @@ export async function GET(req: Request) {
     }
 
     const tasks = await prismaClient.projectsTasks.findMany({
-      where: { projectName },
+      where: { tasksUniqueId },
     });
 
     return NextResponse.json(tasks);
@@ -67,15 +67,15 @@ export async function GET(req: Request) {
 // Update Task by ID
 export async function PUT(req: Request) {
   try {
-    const projectName = new URL(req.url).searchParams.get("projectName");
-    if (!projectName || !isValidProject(projectName)) {
+    const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
+    if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }
       );
     }
     const body = await req.json();
-    const validatedData = taskSchema.parse({ ...body, projectName });
+    const validatedData = taskSchema.parse({ ...body, tasksUniqueId });
 
     const updatedTask = await prismaClient.projectsTasks.update({
       where: { id: body.id },
@@ -91,9 +91,9 @@ export async function PUT(req: Request) {
 // Delete Task by ID
 export async function DELETE(req: Request) {
   try {
-    const projectName = new URL(req.url).searchParams.get("projectName");
+    const tasksUniqueId = new URL(req.url).searchParams.get("tasksUniqueId");
 
-    if (!projectName || !isValidProject(projectName)) {
+    if (!tasksUniqueId || !isValidProject(tasksUniqueId)) {
       return NextResponse.json(
         { error: "Invalid project name" },
         { status: 400 }

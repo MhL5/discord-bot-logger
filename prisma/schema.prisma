@@ -40,22 +40,15 @@ enum TaskPriorities {
   high
 }
 
-// task management system:
-enum TaskCategory {
-  frontend
-  backend
-  both
-}
-
 model ProjectsTasks {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String         @default("")
-  status      TaskStatus     @default(todo)
-  projectName String
-  category    TaskCategory   @default(both)
-  tags        String[]       @default([])
-  priority    TaskPriorities @default(low)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String         @default("")
+  status        TaskStatus     @default(todo)
+  tasksUniqueId String         @default("")
+  category      String         @default("")
+  tags          String[]       @default([])
+  priority      TaskPriorities @default(low)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
